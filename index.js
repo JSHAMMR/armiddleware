@@ -23,6 +23,7 @@ app.use((request,response,next)=>{
 	response.header("Access-Control-Allow-Headers","Origin,X-Requested-With,Content-Type,Accept");
 	next();
 });
+app.use('/uploadedTdModel', express.static('uploadedTdModel'));
 mysql.connect();
 routes(app); //register the route
 app.listen(process.env.PORT || 8080);
