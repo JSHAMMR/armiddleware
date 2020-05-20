@@ -33,14 +33,19 @@ exports.login = function (req, res) {
 
 //logout
 exports.logout = function(req,res){
-    if (req.session != '') {
-        // delete session object
-        req.session.destroy(function(err) {
-          if(err) {
-            res.status(200).send({ error: true, message: err });
-          } else {
-            res.status(400).send({ error: false, message: 'Successful logout' });
+    try{
+        if (req.session) {
+            // delete session object
+            req.session.destroy(function(err) {
+              if(err) {
+                res.status(400).send({status:400, error: true, message: err});
+              } else {
+                res.status(200).send({status:200,error: false, message: 'Successful logout'});
+              }
+            });
           }
-        });
-      }
+    }catch(err){
+        throw new Error(err.message);
+    }
+
 }
